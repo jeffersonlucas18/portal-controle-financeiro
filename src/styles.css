@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.body {
+  font-family: Poppins, sans-serif;
+  background-color: #f9f9f9;
+  color: #535b65 !important;
+  font-size: .91rem !important;
+  line-height: 1.5;
+}
