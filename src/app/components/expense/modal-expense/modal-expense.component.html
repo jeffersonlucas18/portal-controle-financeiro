@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title">Despesas</h4>
+  <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+  <div class="row mb-2">
+    <div class="col-lg-6">
+      <label>Nome</label>
+      <input class="form-control" formControlName="name" placeholder="Digite o nome da sua despesas">
+    </div>
+
+    <div class="col-lg-6">
+      <label>Valor</label>
+      <input class="form-control" formControlName="valor" placeholder="Digite o valor da despesa">
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-lg-12">
+      <label>Status</label>
+      <select class="form-select" name="categorie" formControlName="categoryId">
+        <option [value]="'PAGO'">Pago</option>
+        <option [value]="'PENDENTE'">Pendente</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-secondary">Sair</button>
+</div>

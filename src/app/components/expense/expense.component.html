@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="d-flex justify-content-between">
-        <h3>Contas</h3>
+        <h3>Despesas</h3>
 
         <div class="inline">
           <button class="btn btn-primary" (click)="openModal(modal)">Novo</button>
@@ -22,17 +22,15 @@
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
-                  <th scope="col">Categoria</th>
-                  <th scope="col">Salario</th>
+                  <th scope="col">Valor</th>
                 </tr>
               </thead>
-              @if (!loading$() && accounts().length) {
+              @if (!loading$() && expenses().length) {
               <tbody>
-                @for (account of accounts(); track account) {
+                @for (account of expenses(); track account) {
                 <tr>
-                  <td><a href="javascript:void(0)" (click)="route(account)">{{account.name}}</a></td>
-                  <td>{{account.categoryId == 1? 'Pessoal' : 'Financiamento'}}</td>
-                  <td>{{account.salary|currency: 'BRL'}}</td>
+                  <td>{{account.name}}</td>
+                  <td>{{account.value |currency: 'BRL'}}</td>
                 </tr>
                 }
 
@@ -41,7 +39,7 @@
             </table>
           </div>
 
-          @if (!accounts().length && !loading$()) {
+          @if (!expenses().length && !loading$()) {
           <div class="alert alert-info" role="alert">
             Nenhuma informação encontrada!
           </div>
@@ -53,5 +51,5 @@
 </div>
 
 <ng-template #modal>
-  <app-modal-account [categories]="categories" />
+  <app-modal-expense />
 </ng-template>
