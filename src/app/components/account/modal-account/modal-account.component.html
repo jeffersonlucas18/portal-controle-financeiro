@@ -1,60 +1,110 @@
 <div class="modal-header">
   <h4 class="modal-title">Contas</h4>
-  <button type="button" class="btn-close" aria-label="Close"></button>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 <div class="modal-body">
 
   <form [formGroup]="form">
-    <div class="row mb-2">
-      <div class="col-lg-6">
-        <label>Nome</label>
-        <input class="form-control" formControlName="name" placeholder="Digite seu nome">
-      </div>
-
-      <div class="col-lg-6">
-        <label>Salario</label>
-        <input class="form-control" formControlName="salary" placeholder="Digite seu salário">
-      </div>
-    </div>
 
     <div class="row mb-2">
       <div class="col-lg-12">
-        <label>Categoria</label>
-        <select class="form-select" name="categorie" formControlName="categoryId">
+        <label>Categoria<span class="text-danger">*</span></label>
+        <select class="form-select" name="categorie" formControlName="categoryId" (change)="selectType()">
           <option [value]="null">Selecione...</option>
           @for (categorie of categories(); track $index) {
           <option [value]="categorie.id">{{categorie.name}}</option>
           }
+
         </select>
+
+        @if (this.validateField("categoryId")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
       </div>
     </div>
+
+    @if (form.value.categoryId != null) {
+    <div class="row mb-2">
+      <div class="col-lg-6">
+        <label>{{form.value.categoryId == 1 ? 'Mês': 'Nome'}}<span class="text-danger">*</span></label>
+
+        @if (form.value.categoryId == 1) {
+        <select class="form-select" formControlName="name">
+          <option [value]="null">Selecione...</option>
+          @for (item of months(); track $index) {
+          <option [value]="item">{{item}}</option>
+
+          }
+        </select>
+        }@else {
+        <input class="form-control" formControlName="name" placeholder="Digite o nome">
+        }
+        @if (this.validateField("salary")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
+      </div>
+      <div class="col-lg-6">
+        <label>Salario<span class="text-danger">*</span></label>
+        <input class="form-control" formControlName="salary" placeholder="Digite seu salário"
+          [options]=" { prefix: 'R$ ', thousands: '.', decimal: ',' }" currencyMask>
+        @if (this.validateField("salary")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
+      </div>
+    </div>
+
+
 
     @if (this.form.value.categoryId == 2) {
     <div class="row mb-2">
       <div class="col-lg-4">
-        <label>Qtde Parcela</label>
+        <label>Qtde Parcela <span class="text-danger">*</span></label>
         <input class="form-control" formControlName="amountInstallment" placeholder="Digite sua quantidade de parcela"
           type="number">
+        @if (this.validateField("amountInstallment")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
       </div>
 
       <div class="col-lg-4">
-        <label>Qtde Parcela Pagas</label>
+        <label>Qtde Parcela Pagas<span class="text-danger">*</span></label>
         <input class="form-control" formControlName="amountInstallmentPay"
           placeholder="Digite sua quantidade de parcela pagas" type="number">
+        @if (this.validateField("amountInstallmentPay")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
       </div>
 
       <div class="col-lg-4">
-        <label>Valor das Parcela</label>
+        <label>Valor das Parcela<span class="text-danger">*</span></label>
         <input class="form-control" formControlName="valueInstallment" placeholder="Digite o valor da sua parcela"
           type="number">
+        @if (this.validateField("valueInstallment")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
       </div>
     </div>
-
+    }
     }
 
   </form>
 
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary">Sair</button>
+  @if (!loading()) {
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Sair</button>
+  <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Salvar</button>
+  }
 </div>

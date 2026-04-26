@@ -53,5 +53,5 @@
 </div>
 
 <ng-template #modal>
-  <app-modal-account [categories]="categories" />
+  <app-modal-account [categories]="categories" [modalBs]="modalBs" (reload$)="reload()" />
 </ng-template>

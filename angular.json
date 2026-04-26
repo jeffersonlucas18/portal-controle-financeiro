@@ -68,6 +68,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "controle-financeiro-portal:build:production"
@@ -76,6 +79,7 @@
               "buildTarget": "controle-financeiro-portal:build:development"
             }
           },
+
           "defaultConfiguration": "development"
         },
         "test": {

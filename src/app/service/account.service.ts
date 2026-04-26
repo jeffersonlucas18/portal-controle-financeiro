@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Categories } from '../model/categories.model';
+import { form } from '@angular/forms/signals';
 
 const env = environment.DEV
 
@@ -16,21 +17,36 @@ export class AccountService {
   private _httpClient = inject(HttpClient)
 
   public getList(): Observable<HttpResponse<any[]>> {
-    return this._httpClient.get<any[]>(`${env}control-price/accounts.json`, {
+    return this._httpClient.get<any[]>(`api/control-price/accounts.json`, {
       observe: 'response',
       responseType: 'json'
     });
   };
 
   public getListExpense(configAccountId: number): Observable<HttpResponse<any[]>> {
-    return this._httpClient.get<any[]>(`${env}control-price/expense/expenses.json?configAccountId=${configAccountId}`, {
+    return this._httpClient.get<any[]>(`api/control-price/expense/expenses.json?configAccountId=${configAccountId}`, {
       observe: 'response',
       responseType: 'json'
     });
   };
 
+  public saveAccount(forms: any): Observable<HttpResponse<any>> {
+    return this._httpClient.post<any>(`api/control-price/account/save.json`, forms, {
+      observe: 'response',
+      responseType: 'json'
+    });
+  };
+
+  public saveExpense(forms: any): Observable<HttpResponse<any>> {
+    return this._httpClient.post<any>(`api/control-price/expense/save.json`, forms, {
+      observe: 'response',
+      responseType: 'json'
+    });
+  };
+
+
   public getListCategory(): Observable<HttpResponse<Categories[]>> {
-    return this._httpClient.get<any[]>(`${env}control-price/categories.json`, {
+    return this._httpClient.get<any[]>(`api/control-price/categories.json`, {
       observe: 'response',
       responseType: 'json'
     });

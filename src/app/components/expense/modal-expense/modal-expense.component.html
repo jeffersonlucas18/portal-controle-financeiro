@@ -1,32 +1,53 @@
 <div class="modal-header">
   <h4 class="modal-title">Despesas</h4>
-  <button type="button" class="btn-close" aria-label="Close"></button>
+  <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
 </div>
 
 <div class="modal-body">
-  <div class="row mb-2">
-    <div class="col-lg-6">
-      <label>Nome</label>
-      <input class="form-control" formControlName="name" placeholder="Digite o nome da sua despesas">
+  <form [formGroup]="form">
+    <div class="row mb-2">
+      <div class="col-lg-6">
+        <label>Nome<span class="text-danger">*</span></label>
+        <input class="form-control" formControlName="name" placeholder="Digite o nome da sua despesas">
+        @if (this.validateField("name")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
+      </div>
+
+      <div class="col-lg-6">
+        <label>Valor<span class="text-danger">*</span></label>
+        <input class="form-control" formControlName="value" placeholder="Digite o valor da despesa"
+          [options]=" { prefix: 'R$ ', thousands: '.', decimal: ',' }" currencyMask>
+        @if (this.validateField("value")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
+      </div>
     </div>
 
-    <div class="col-lg-6">
-      <label>Valor</label>
-      <input class="form-control" formControlName="valor" placeholder="Digite o valor da despesa">
+    <div class="row mb-2">
+      <div class="col-lg-12">
+        <label>Status<span class="text-danger">*</span></label>
+        <select class="form-select" name="status" formControlName="status">
+          <option [value]="'PAGO'">Pago</option>
+          <option [value]="'PENDENTE'">Pendente</option>
+        </select>
+        @if (this.validateField("status")) {
+        <div class="text-danger">
+          Obrigatório
+        </div>
+        }
+      </div>
     </div>
-  </div>
-
-  <div class="row mb-2">
-    <div class="col-lg-12">
-      <label>Status</label>
-      <select class="form-select" name="categorie" formControlName="categoryId">
-        <option [value]="'PAGO'">Pago</option>
-        <option [value]="'PENDENTE'">Pendente</option>
-      </select>
-    </div>
-  </div>
+  </form>
 </div>
 
 <div class="modal-footer">
-  <button type="button" class="btn btn-outline-secondary">Sair</button>
+  @if (!loading()) {
+  <button type="button" class="btn btn-secondary" (click)="closeModal()">Sair</button>
+  <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="save()">Salvar</button>
+  }
 </div>

@@ -19,6 +19,7 @@ export class AccountComponent implements OnInit {
   public loadingCategories$ = signal<boolean>(true);
   public accounts = signal<Account[]>([]);
   public categories = signal<any[]>([]);
+  public modalBs = signal<any>(null);
 
   /* SERVICE */
   private _accountService = inject(AccountService)
@@ -30,12 +31,17 @@ export class AccountComponent implements OnInit {
     this._getList();
   }
 
+  public reload(): void {
+    this._getList();
+  }
+
   public route(account: Account): void {
     this._router.navigate([`/account/expenses/${account.id}`])
   }
 
   public openModal(template: TemplateRef<any>) {
-    this._modalService.open(template, { size: 'lg' });
+    this.modalBs.set(this._modalService.open(template, { size: 'lg' }));
+    console.log(this.modalBs())
   }
 
   private _getList(): void {
